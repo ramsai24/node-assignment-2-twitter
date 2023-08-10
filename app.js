@@ -421,11 +421,10 @@ app.get("/user/tweets/", authenticateToken, async (request, response) => {
 
   date_time as dateTime
   
-  FROM reply INNER JOIN tweet ON tweet.tweet_id = reply.tweet_id 
-  INNER JOIN like ON tweet.tweet_id = like.tweet_id 
-  INNER JOIN follower ON follower.following_user_id= tweet.user_id
+  FROM user INNER JOIN tweet ON tweet.user_id = user.user_id 
+ 
 
-  WHERE follower.follower_user_id = ${dbUser.user_id}
+  WHERE user.user_id = ${dbUser.user_id}
   ORDER BY tweet.tweet_id ;`;
 
   const tweetsList = await db.all(sqlQuery);
